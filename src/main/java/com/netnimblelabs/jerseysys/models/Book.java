@@ -74,7 +74,8 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        return "com.netnimblelabs.jerseysys.models.Book[ id=" + id + " ]";
+        return "Book{" + "id=" + id + ", title=" + title + ", author=" + author + '}';
     }
+    
     
 }
