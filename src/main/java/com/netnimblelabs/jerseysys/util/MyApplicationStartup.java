@@ -1,20 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.netnimblelabs.jerseysys.util;
 
-/**
- *
- * @author admin
- */
 import com.netnimblelabs.jerseysys.config.MyScheduler;
-import jakarta.servlet.ServletContextEvent;
-import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.annotation.WebListener;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+import org.apache.log4j.Logger;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.apache.log4j.Logger;
 
 @WebListener
 public class MyApplicationStartup implements ServletContextListener {
@@ -24,9 +16,6 @@ public class MyApplicationStartup implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         // Display ASCII art
-//        ASCIIArtUtil.displayASCIIArt("Your Application Name");
-        // Start the scheduler
-
         System.out.println(" _______  _        _______ \n"
                 + "(  ____ \\( (    /|(  ____ )\n"
                 + "| (    \\/|  \\  ( || (    )|\n"
@@ -36,7 +25,16 @@ public class MyApplicationStartup implements ServletContextListener {
                 + "/\\____) || )  \\  || ) \\ \\__\n"
                 + "\\_______)|/    )_)|/   \\__/\n"
                 + "                           ");
-        
+
+        // Initialize Hibernate
+        try {
+            HibernateUtil.getSessionFactory();
+            logger.info("Hibernate SessionFactory initialized successfully.");
+        } catch (Exception e) {
+            logger.error("Failed to initialize Hibernate SessionFactory", e);
+        }
+
+        // Start the scheduler
         MyScheduler.getInstance();
         logger.info("Scheduler started successfully.");
     }
@@ -52,6 +50,14 @@ public class MyApplicationStartup implements ServletContextListener {
             }
         } catch (SchedulerException e) {
             logger.error("Failed to shut down the scheduler", e);
+        }
+
+        // Close Hibernate SessionFactory
+        try {
+            HibernateUtil.shutdown();
+            logger.info("Hibernate SessionFactory shut down successfully.");
+        } catch (Exception e) {
+            logger.error("Failed to shut down Hibernate SessionFactory", e);
         }
     }
 }

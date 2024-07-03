@@ -7,15 +7,17 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/books_db</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">Gloryv31</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         
         <!-- Add the mapping for the Book entity -->
         <mapping class="com.netnimblelabs.jerseysys.models.Book"/>
         <!-- Names the annotated entity classes -->
-        <mapping class="com.netnimblelabs.jerseysys.models.Collection"/>
-        <mapping class="com.netnimblelabs.jerseysys.models.Batch"/>
         <mapping class="com.netnimblelabs.jerseysys.models.CompanyRequest"/>
+        <mapping class="com.netnimblelabs.jerseysys.models.TaskBatch"/>
+        <mapping class="com.netnimblelabs.jerseysys.models.TaskCollection"/>
+        <mapping class="com.netnimblelabs.jerseysys.models.TaskCompanyRequest"/>
+
     </session-factory>
 </hibernate-configuration>

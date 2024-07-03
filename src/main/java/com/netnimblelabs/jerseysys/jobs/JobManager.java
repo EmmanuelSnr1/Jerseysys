@@ -5,129 +5,153 @@
 package com.netnimblelabs.jerseysys.jobs;
 
 import com.netnimblelabs.jerseysys.config.MyScheduler;
-import java.util.UUID;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
+import com.netnimblelabs.jerseysys.models.TaskBatch;
 import org.quartz.*;
-import org.quartz.impl.matchers.GroupMatcher;
-import org.apache.log4j.*;
+import org.quartz.impl.StdSchedulerFactory;
+import com.netnimblelabs.jerseysys.util.TaskDBUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.UUID;
-
-/**
- *
- * @author admin
- */
-
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.quartz.impl.matchers.GroupMatcher;
 
 public class JobManager {
-    private static final Logger logger = Logger.getLogger(JobManager.class);
 
-//    public void doFetchCompanyProfileInfoJob() {
-//        try {
-//            Scheduler scheduler = MyScheduler.getInstance();
-//
-//            // Generate unique IDs for the job and trigger
-//            String jobId = UUID.randomUUID().toString();
-//            String triggerId = UUID.randomUUID().toString();
-//
-//            // Define the job and tie it to our FetchCompanyDataJob class
-//            JobDetail job = JobBuilder.newJob(FetchCompanyDataJob.class)
-//                    .withIdentity("fetchCompanyDetailsJob-" + jobId, "group1")
-//                    .build();
-//
-//            // Trigger the job to run every 5 minutes
-//            Trigger trigger = TriggerBuilder.newTrigger()
-//                    .withIdentity("fetchCompanyDetailsTrigger-" + triggerId, "group1")
-//                    .startNow()
-//                    .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-//                            .withIntervalInMinutes(5)
-//                            .repeatForever())
-//                    .build();
-//
-//            // Schedule the job using the trigger
-//            scheduler.scheduleJob(job, trigger);
-//            logger.info("Scheduled FetchCompanyDetailsJob with ID: " + jobId + " to run every 5 minutes.");
-//        } catch (SchedulerException e) {
-//            logger.error("Error scheduling FetchCompanyDetailsJob", e);
-//        }
-//    }
+    private static AtomicInteger jobCounter = new AtomicInteger(0);
+    private static AtomicInteger triggerCounter = new AtomicInteger(0);
+    private static final String JOB_ID = "HeadcountJob";
+    private static final String TRIGGER_ID = "HeadcountTrigger";
+    private static final Logger logger = LoggerFactory.getLogger(JobManager.class);
 
-    public void checkRunningJobs() {
-        try {
-            Scheduler scheduler = MyScheduler.getInstance();
+    public static void checkAllJobs() throws SchedulerException {
 
-            List<JobExecutionContext> currentlyExecutingJobs = scheduler.getCurrentlyExecutingJobs();
+        Scheduler scheduler = MyScheduler.getInstance();
 
-            if (currentlyExecutingJobs.isEmpty()) {
-                logger.info("There are currently no running Jobs");
+        List<String> jobGroups = scheduler.getJobGroupNames();
+        for (String group : jobGroups) {
+            Set<JobKey> jobKeys = scheduler.getJobKeys(GroupMatcher.jobGroupEquals(group));
+            for (JobKey jobKey : jobKeys) {
+                JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+                System.out.println("Job details: " + jobDetail);
             }
-
-            for (JobExecutionContext jobExecutionContext : currentlyExecutingJobs) {
-                logger.info("Running Job: " + jobExecutionContext.getJobDetail().getKey());
-                // Additional details can be logged here
-            }
-        } catch (SchedulerException e) {
-            logger.error("Error checking running jobs", e);
         }
     }
 
-    public void checkJobDetails(String jobName, String jobGroup) {
-        try {
-            Scheduler scheduler = MyScheduler.getInstance();
-            JobKey jobKey = new JobKey(jobName, jobGroup);
+    public static void checkJobState(String jobName, String jobGroup) throws SchedulerException {
+        Scheduler scheduler = MyScheduler.getInstance();
+
+        JobKey jobKey = new JobKey(jobName, jobGroup);
+        if (scheduler.checkExists(jobKey)) {
+            List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
+            for (Trigger trigger : triggers) {
+                Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
+                System.out.println("Trigger state for " + trigger.getKey() + ": " + triggerState);
+            }
+        } else {
+            System.out.println("Job does not exist.");
+        }
+    }
+
+    public static void checkJobDetails(String jobName, String jobGroup) throws SchedulerException {
+        Scheduler scheduler = MyScheduler.getInstance();
+
+        JobKey jobKey = new JobKey(jobName, jobGroup);
+        if (scheduler.checkExists(jobKey)) {
             JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-
-            if (jobDetail != null) {
-                logger.info("Job Details: " + jobDetail);
-                // Additional details can be logged here
-            } else {
-                logger.warn("Job not found.");
-            }
-        } catch (SchedulerException e) {
-            logger.error("Error checking job details", e);
+            System.out.println("Job details: " + jobDetail);
+        } else {
+            System.out.println("Job does not exist.");
         }
     }
 
-    public void checkJobState(String jobName, String jobGroup) {
-        try {
-            Scheduler scheduler = MyScheduler.getInstance();
-            JobKey jobKey = new JobKey(jobName, jobGroup);
-            TriggerKey triggerKey = new TriggerKey(jobName + "Trigger", jobGroup);
-            Trigger trigger = scheduler.getTrigger(triggerKey);
+    public static void checkRunningJobs() throws SchedulerException {
+        Scheduler scheduler = MyScheduler.getInstance();
 
-            if (trigger != null) {
-                Trigger.TriggerState triggerState = scheduler.getTriggerState(triggerKey);
-                logger.info("Job State: " + triggerState);
-            } else {
-                logger.warn("Trigger not found for the job.");
-            }
-        } catch (SchedulerException e) {
-            logger.error("Error checking job state", e);
+        List<JobExecutionContext> currentlyExecutingJobs = scheduler.getCurrentlyExecutingJobs();
+        for (JobExecutionContext jobExecutionContext : currentlyExecutingJobs) {
+            JobDetail jobDetail = jobExecutionContext.getJobDetail();
+            System.out.println("Currently running job: " + jobDetail);
         }
     }
 
-    public void checkAllJobs() {
+    // Existing methods: initializeJob, prepareAndScheduleNextBatch, addFetchHeadcountJob
+    public static int initializeJob(List<String> orgNumbers) throws Exception {
+        int collectionId = TaskDBUtils.createCollection(orgNumbers);
+        logger.info("Created collection with ID: {} ", collectionId);
+        prepareAndScheduleNextBatch(collectionId);
+        return collectionId;
+    }
+
+    public static void prepareAndScheduleNextBatch(int collectionId) throws Exception {
+        List<TaskBatch> pendingBatches = TaskDBUtils.getPendingBatches(collectionId, 1);
+        if (!pendingBatches.isEmpty()) {
+            int nextBatchId = pendingBatches.get(0).getBatchId();
+            logger.info("Preparing to schedule next batch with ID: {}", nextBatchId);
+            TaskDBUtils.updateCollectionStatus(collectionId, "Processing");
+            addFetchHeadcountJob(collectionId, nextBatchId);
+        } else {
+            logger.info("No more pending batches. Marking collection as completed.");
+            TaskDBUtils.updateCollectionStatus(collectionId, "Completed");
+        }
+    }
+
+    public static void addFetchHeadcountJob(int collectionId, int batchId) throws SchedulerException {
         try {
             Scheduler scheduler = MyScheduler.getInstance();
-            for (String groupName : scheduler.getJobGroupNames()) {
-                for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
-                    JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-                    List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
-                    for (Trigger trigger : triggers) {
-                        Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
-                        logger.info("Job: " + jobDetail.getKey() + " is in state: " + triggerState);
-                    }
-                }
+            JobDetail jobDetail;
+
+            // Check if the job already exists
+            JobKey jobKey = new JobKey(JOB_ID);
+            if (!scheduler.checkExists(jobKey)) {
+                // Add collectionId and batchId to JobDataMap
+                jobDetail = JobBuilder.newJob(HeadcountJob.class)
+                        .withIdentity(JOB_ID)
+                        .usingJobData("collectionId", collectionId)
+                        .usingJobData("batchId", batchId)
+                        .build();
+
+                Trigger trigger = TriggerBuilder.newTrigger()
+                        .withIdentity(TRIGGER_ID)
+                        .startNow()
+                        .withSchedule(SimpleScheduleBuilder.simpleSchedule()
+                                .withIntervalInMinutes(5)
+                                .repeatForever())
+                        .build();
+
+                // Schedule the job using the trigger
+                scheduler.scheduleJob(jobDetail, trigger);
+                System.out.println("Scheduled Headcount Job with ID: " + JOB_ID + " to run every 5 minutes.");
+            } else {
+                // Update job data if the job already exists
+                jobDetail = scheduler.getJobDetail(jobKey);
+                JobDataMap dataMap = jobDetail.getJobDataMap();
+                dataMap.put("collectionId", collectionId);
+                dataMap.put("batchId", batchId);
+                scheduler.addJob(jobDetail, true, true);
             }
         } catch (SchedulerException e) {
-            logger.error("Error checking all jobs", e);
+            System.err.println("Failed to schedule Headcount Job with ID: " + e);
+            throw e; // Rethrow the exception to ensure it is handled appropriately
+        }
+    }
+
+    public static class HeadcountJob implements Job {
+
+        @Override
+        public void execute(JobExecutionContext context) throws JobExecutionException {
+            JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+            int collectionId = dataMap.getInt("collectionId");
+            int batchId = dataMap.getInt("batchId");
+            // Process the batch
+            System.out.println("Processing collection ID: " + collectionId + " with batch ID: " + batchId);
+            // After processing, prepare and schedule the next batch
+            try {
+                prepareAndScheduleNextBatch(collectionId);
+            } catch (Exception e) {
+                throw new JobExecutionException(e);
+            }
         }
     }
 }
-

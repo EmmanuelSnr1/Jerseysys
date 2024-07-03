@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/jerseysys">
+  <!-- Database Resource configuration based on Hibernate settings -->
+  <Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;                                 org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer" logAbandoned="true" maxIdle="10" maxTotal="20" maxWaitMillis="-1" minEvictableIdleTimeMillis="60000" name="jdbc/books_db" password="Gloryv31" removeAbandoned="true" removeAbandonedTimeout="60" testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="30000" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/books_db" username="root" validationInterval="30000" validationQuery="SELECT 1"/>
+</Context>

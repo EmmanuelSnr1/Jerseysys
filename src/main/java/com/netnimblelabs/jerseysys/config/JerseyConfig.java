@@ -4,16 +4,17 @@
  */
 package com.netnimblelabs.jerseysys.config;
 
-/**
- *
- * @author admin
- */
-import jakarta.ws.rs.ApplicationPath;
+import com.netnimblelabs.jerseysys.api.JobManagerAPI;
 import org.glassfish.jersey.server.ResourceConfig;
+/**
+ * Jersey configuration class
+ */
 
-@ApplicationPath("/api") // Set the base path for your JAX-RS resources
+
 public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
+        register(JobManagerAPI.class);
         packages("com.netnimblelabs.jerseysys.api");
     }
 }
+
