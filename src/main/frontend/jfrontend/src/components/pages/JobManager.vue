@@ -1,24 +1,23 @@
 <template>
     <body>
         <Navbar />
-        <main class="p-4 h-auto ">
+        <main class="p-4 h-auto mx-auto max-w-screen-lg">
 
             <div class="container mx-auto px-4">
+                <h1
+                    class="mb-4 text-4xl text-center font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                    Manage All Jobs</h1>
+                <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Here at
+                    Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and
+                    drive economic growth.</p>
+                <section id="" class="p-4">
 
-                <section class="p-4">
-
-                    <h1
-                        class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                        We invest in the world’s potential</h1>
-                    <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Here
-                        at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value
-                        and drive economic growth.</p>
-
-                        <div class="columns-3 ...">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         <div
-                            class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                            class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <a href="#">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Current Running Job(s)</h5>
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Current
+                                    Running Job(s)</h5>
                             </a>
                             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise
                                 technology acquisitions of 2021 so far, in reverse chronological order.</p>
@@ -35,9 +34,10 @@
 
 
                         <div
-                            class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                            class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <a href="#">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Stop Current Job</h5>
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Stop
+                                    Current Job</h5>
                             </a>
                             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise
                                 technology acquisitions of 2021 so far, in reverse chronological order.</p>
@@ -50,13 +50,14 @@
                                         stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                                 </svg>
                             </a>
-                            
+
                         </div>
 
                         <div
-                            class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                            class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <a href="#">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Start New Job</h5>
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Start New
+                                    Job</h5>
                             </a>
                             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise
                                 technology acquisitions of 2021 so far, in reverse chronological order.</p>
@@ -69,7 +70,7 @@
                                         stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                                 </svg>
                             </a>
-                            
+
                         </div>
 
                     </div>
@@ -79,8 +80,8 @@
                 </section>
 
                 <section id="table">
-                    <h2 class="text-4xl font-extrabold dark:text-white">Jobs History</h2>
-                    
+                    <h2 class="text-4xl text-center  font-extrabold dark:text-white">Jobs History</h2>
+
                     <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Here
                         at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value
                         and drive economic growth.</p>
@@ -371,6 +372,43 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
+                            aria-label="Table navigation">
+                            <span
+                                class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing
+                                <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span
+                                    class="font-semibold text-gray-900 dark:text-white">1000</span></span>
+                            <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                                </li>
+                                <li>
+                                    <a href="#" aria-current="page"
+                                        class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     <!-- Section 1 content -->
                 </section>
@@ -382,11 +420,39 @@
 
         <Footer />
 
-    </body>
-</template>
+    </body></template>
   
 <script setup>
 import Navbar from '../layout/Navbar.vue';
+
+import { onMounted } from 'vue'
+import { 
+    initAccordions, 
+    initCarousels, 
+    initCollapses, 
+    initDials, 
+    initDismisses, 
+    initDrawers, 
+    initDropdowns, 
+    initModals, 
+    initPopovers, 
+    initTabs, 
+    initTooltips } from 'flowbite'
+
+// initialize components based on data attribute selectors
+onMounted(() => {
+    initAccordions();
+    initCarousels();
+    initCollapses();
+    initDials();
+    initDismisses();
+    initDrawers();
+    initDropdowns();
+    initModals();
+    initPopovers();
+    initTabs();
+    initTooltips();
+})
 
 import Footer from '../layout/Footer.vue';
 </script>

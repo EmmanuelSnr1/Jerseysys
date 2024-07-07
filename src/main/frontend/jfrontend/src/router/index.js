@@ -3,6 +3,10 @@ import Dashboard from '../components/pages/Dashboard.vue';
 import HelloWorld from '../components/HelloWorld.vue';
 import Home from '../components/pages/Home.vue';
 import JobManager from '../components/pages/JobManager.vue';
+import JobDetail from '../components/pages/JobDetail.vue';
+import Datastore from '../components/pages/Datastore.vue';
+
+
 
 
 
@@ -24,6 +28,17 @@ const routes = [
         name: 'JobManager',
         component: JobManager,
       },
+      {
+        path: '/jobdetail',
+        name: 'JobDetail',
+        component: JobDetail,
+      },
+      {
+        path: '/datastore',
+        name: 'Datastore',
+        component: Datastore,
+      },
+      
     // Add routes for other pages like Jobs and Analytics
   ];
   
