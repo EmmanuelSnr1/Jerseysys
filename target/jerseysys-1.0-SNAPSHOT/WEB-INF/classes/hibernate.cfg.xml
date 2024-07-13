@@ -15,6 +15,10 @@
         <mapping class="com.netnimblelabs.jerseysys.models.Book"/>
         <!-- Names the annotated entity classes -->
         <mapping class="com.netnimblelabs.jerseysys.models.CompanyRequest"/>
+
+        <mapping class="com.netnimblelabs.jerseysys.models.Batch"/>
+        <mapping class="com.netnimblelabs.jerseysys.models.Collection"/>
+        <mapping class="com.netnimblelabs.jerseysys.models.CompanyRequest"/>
         <mapping class="com.netnimblelabs.jerseysys.models.TaskBatch"/>
         <mapping class="com.netnimblelabs.jerseysys.models.TaskCollection"/>
         <mapping class="com.netnimblelabs.jerseysys.models.TaskCompanyRequest"/>

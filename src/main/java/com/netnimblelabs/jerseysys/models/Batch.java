@@ -21,7 +21,7 @@ public class Batch {
     private Long batchId;
 
     
-    private Collection collection;
+    private Integer collectionId;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -34,8 +34,6 @@ public class Batch {
 
     private int failedCompanies;
 
-    private List<CompanyRequest> companyRequests;
-
     public Long getBatchId() {
         return batchId;
     }
@@ -43,14 +41,8 @@ public class Batch {
     public void setBatchId(Long batchId) {
         this.batchId = batchId;
     }
+    
 
-    public Collection getCollection() {
-        return collection;
-    }
-
-    public void setCollection(Collection collection) {
-        this.collection = collection;
-    }
 
     public Date getCreatedAt() {
         return createdAt;
@@ -92,13 +84,8 @@ public class Batch {
         this.failedCompanies = failedCompanies;
     }
 
-    public List<CompanyRequest> getCompanyRequests() {
-        return companyRequests;
-    }
 
-    public void setCompanyRequests(List<CompanyRequest> companyRequests) {
-        this.companyRequests = companyRequests;
-    }
+    
 
     
 }

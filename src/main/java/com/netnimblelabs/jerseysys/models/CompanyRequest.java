@@ -20,7 +20,7 @@ public class CompanyRequest {
     private Long requestId;
 
     
-    private Batch batch;
+    private Integer batchId;
 
     private String orgNumber;
 
@@ -41,13 +41,6 @@ public class CompanyRequest {
         this.requestId = requestId;
     }
 
-    public Batch getBatch() {
-        return batch;
-    }
-
-    public void setBatch(Batch batch) {
-        this.batch = batch;
-    }
 
     public String getOrgNumber() {
         return orgNumber;

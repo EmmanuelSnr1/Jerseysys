@@ -10,7 +10,6 @@ package com.netnimblelabs.jerseysys.models;
  */
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "Collections")
@@ -31,7 +30,6 @@ public class Collection {
     
     private int failedBatches;
 
-    private List<Batch> batches;
 
     public Long getCollectionId() {
         return collectionId;
@@ -81,13 +79,8 @@ public class Collection {
         this.failedBatches = failedBatches;
     }
 
-    public List<Batch> getBatches() {
-        return batches;
-    }
 
-    public void setBatches(List<Batch> batches) {
-        this.batches = batches;
-    }
+    
 
     
 }
