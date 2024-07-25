@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "apexcharts": "^3.50.0",
+    "axios": "^1.7.2",
     "flowbite": "^2.4.1",
+    "pinia": "^2.1.7",
     "tailwind": "^4.0.0",
     "vue": "^3.4.29",
     "vue-router": "^4.4.0"

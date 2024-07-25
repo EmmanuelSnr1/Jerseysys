@@ -7,10 +7,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080', // Replace with your backend server URL
+        target: 'http://localhost:8080',
         changeOrigin: true,
-        // Optionally, rewrite paths if needed:
-        // rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, '/jerseysys/api'),
       },
     },
   },
