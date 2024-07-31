@@ -13,8 +13,6 @@ export const useBookStore = defineStore('bookStore', {
       try {
         const response = await bookService.getBooks();
         this.books = response.data;
-        console.log("The response " ,response)
-
       } catch (error) {
         this.error = error;
       } finally {
@@ -25,7 +23,7 @@ export const useBookStore = defineStore('bookStore', {
       try {
         const response = await bookService.addBook(book);
         this.books.push(response.data);
-        console.log("The response " ,response)
+        // console.log("The response" ,response)
       } catch (error) {
         this.error = error;
       }
